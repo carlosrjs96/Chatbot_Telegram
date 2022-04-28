@@ -1,5 +1,10 @@
 {
     "bot_token" : "5133692731:AAEnzvIWcMtIhvzPGMeSXYI6ej_Z_xcd0C0",
     "bot_user_name" : "Myries_Design_Bot",
-    "URL" : "the heroku app link that we will create later"
+    "URL" : "the heroku app link that we will create later",
+    "driver": "ODBC Driver 17 for SQL Server",
+    "server": "CARLOS-PC",
+    "database": "Myries_Design_DB",
+    "user": "sa",
+    "password": "1234"
 }
