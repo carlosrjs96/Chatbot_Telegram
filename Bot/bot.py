@@ -18,8 +18,15 @@ preguntas =  [
     "¿Cuantas personas deseas en el retrato?",     # Pregunta 2
     "¿Cuantas mascotas deseas en el retrato?",     # Pregunta 3
     "Todos los retratos van con fondo de color liso. En caso de solicitar un fondo elaborado se cobra como adicional. ✨", # Pregunta 4
-    "¿Desea hacer montaje de 2 fotos?" # Pregunta 5
+    "¿Desea hacer montaje de 2 fotos?", # Pregunta 5
+    "¿Desea realizar el pedido?",     # Pregunta 6
+    "¿Cual es tu nombre completo?",     # Pregunta 7
+    "¿Cual es tu usuario de instagram?", # Pregunta 8
+    "¿Cual es tu numero telefonico?",     # Pregunta 9
+    "Algun comentario final" # Pregunta 10
 ]
+
+
 
 def flujo(update: Update, context: CallbackContext):
     flujo_retrato:Classes.Flujo = context.user_data["Flujo"]
@@ -80,12 +87,36 @@ def flujo(update: Update, context: CallbackContext):
         update.message.reply_text(f"""{flujo_retrato.preguntas[5]} ({opcionesPrecio}) \n{opciones}""")
     
     elif flujo_retrato.numero_pregunta == 6:
+        opciones = "1. Si\n2. No"
         update.message.reply_text(
-        f"""Tu cotización es de un aproximado de ₡ {context.user_data["Flujo"].producto.get_Total()}.
-- /Fecha_de_entrega mas proxima.
-- /Cotizar_nuevo_producto.
-- /Agente (Para hablar con un agente de ventas)
-- /Salir.
+        f"""Tu cotización es de un aproximado de ₡ {context.user_data["Flujo"].producto.get_Total()} \n
+        {flujo_retrato.preguntas[6]} \n {opciones}.
+        - /Cotizar_nuevo_producto.
+        - /Agente (Para hablar con un agente de ventas)
+        - /Salir.
+        """)
+    elif flujo_retrato.numero_pregunta == 7:
+        update.message.reply_text(
+        f""" {flujo_retrato.preguntas[7]} 
+        """)
+    elif flujo_retrato.numero_pregunta == 8:
+        update.message.reply_text(
+        f""" {flujo_retrato.preguntas[8]} 
+        """)
+    elif flujo_retrato.numero_pregunta == 9:
+        update.message.reply_text(
+        f""" {flujo_retrato.preguntas[9]} 
+        """)
+    elif flujo_retrato.numero_pregunta == 10:
+        update.message.reply_text(
+        f""" {flujo_retrato.preguntas[10]} 
+        """)
+    elif flujo_retrato.numero_pregunta == 11:
+        update.message.reply_text(
+        f"""Gracias por preferir Myrie`s Design\n
+        - /Cotizar_nuevo_producto.
+        - /Agente (Para hablar con un agente de ventas)
+        - /Salir.
 """)
 
 def recibe_info(update: Update, context: CallbackContext) -> int:
@@ -162,8 +193,27 @@ def recibe_info(update: Update, context: CallbackContext) -> int:
             caracteristica.tipo   = Classes.Tipo_Caracteristica.MOTAJE
             caracteristica.precio = opcion[4]
             context.user_data["Flujo"].producto.caracteristicas.append(caracteristica)
+    elif flujo_retrato.numero_pregunta == 6:
+        if respuesta == "1":
+            update.message.reply_text(f"""Gracias por preferir Myrie`s Desing, ahora tomaremos algunos datos personales""")
+        elif respuesta == "2":  
+            update.message.reply_text(
+        f"""Gracias por preferir Myrie`s Design\n
+        - /Cotizar_nuevo_producto.
+        - /Agente (Para hablar con un agente de ventas)
+        - /Salir. """)
+    elif flujo_retrato.numero_pregunta == 7:
+         context.user_data["Flujo"].datos.nombre = respuesta
+         context.user_data["Flujo"].datos.user_Telegram  = update.effective_user.username
+    elif flujo_retrato.numero_pregunta == 8:
+        context.user_data["Flujo"].datos.user_Instagram = respuesta
+    elif flujo_retrato.numero_pregunta == 9:
+        context.user_data["Flujo"].datos.celular = respuesta    
+    elif flujo_retrato.numero_pregunta == 10:
+        context.user_data["Flujo"].datos.comentario = respuesta  
     flujo_retrato.numero_pregunta += 1
     flujo(update,context)
+
 
 
 #def receive_info(update: Update, context: CallbackContext) -> int:
@@ -202,7 +252,7 @@ def cotizar(update: Update, context: CallbackContext):
 
 def Fecha_de_entrega(update: Update, context: CallbackContext):
     update.message.reply_text(
-        f"""Hola la fecha estimada de entrega esta para el 28/03/2022. 
+        f"""Hola la fecha estimada de entrega esta para el 15/06/2022. 
 ¿Deseas realizar el pedido?
 - /Si_realizar_el_pedido
 - /No_realizar_el_pedido
@@ -232,8 +282,10 @@ updater.dispatcher.add_handler(MessageHandler(Filters.regex(respuesta_pregunta_n
 updater.dispatcher.add_handler(CommandHandler('Cotizar', cotizar))
 updater.dispatcher.add_handler(CommandHandler('Agente', agente))
 
-updater.dispatcher.add_handler(CommandHandler('Fecha_de_entrega', Fecha_de_entrega))
+updater.dispatcher.add_handler(CommandHandler('Fecha_de_entrega', Fecha_de_entrega)) 
+
 updater.dispatcher.add_handler(CommandHandler('Cotizar_nuevo_producto', cotizar))
+updater.dispatcher.add_handler(CommandHandler('Agente', agente))
 updater.dispatcher.add_handler(CommandHandler('Salir', salir))
 
 
