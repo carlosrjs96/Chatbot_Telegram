@@ -3,10 +3,10 @@ import enum
 class Flujo:
     # Constructor
     def __init__(self):
-        self.producto        : Producto  = Producto()
-        self.datos           : Datos     = Datos()
-        self.preguntas       : list[str] = []
-        self.numero_pregunta : int       = 0
+        self.producto         : Producto  = Producto()
+        self.cliente          : Cliente   = Cliente()
+        self.preguntas        : list[str] = []
+        self.numero_pregunta  : int       = 0
 #----------------------------------------------------------------
 class Producto:
     def __init__(self):
@@ -30,12 +30,10 @@ class Tipo_Caracteristica(enum.Enum):
     EXTRAMASCOTA  = 2
     FONDO         = 3
     MOTAJE        = 4
-
 #----------------------------------------------------------------
-class Datos:
+class Cliente:
     def __init__(self):
-        self.nombre          : str = ""
-        self.user_Telegram   : str = ""
-        self.user_Instagram  : str = ""      
-        self.celular         : int = 0
-        self.user_Instagram  : str = "" 
+        self.nombre         : str = ""
+        self.user_Telegram  : str = ""
+        self.user_Instagram : str = ""      
+        self.celular        : str = ""
