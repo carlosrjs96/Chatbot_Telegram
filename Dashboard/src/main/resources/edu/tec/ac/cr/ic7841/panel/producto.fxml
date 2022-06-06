@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="articuloProducto" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#seleccionar" onMouseEntered="#oscurecer" onMouseExited="#aclarar" prefHeight="53.0" prefWidth="1003.0" spacing="80.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.tec.ac.cr.ic7841.panel.ControladorProducto">
+    <effect>
+        <DropShadow blurType="GAUSSIAN" height="5.0" radius="2.0" width="5.0" />
+    </effect>
+    <ImageView fitHeight="38.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true">
+        <HBox.margin>
+            <Insets left="10.0" />
+        </HBox.margin>
+        <Image url="@icons8_GPS_Antenna_64px_1.png" />
+    </ImageView>
+    <Label fx:id="textoNumero" layoutX="372.0" layoutY="29.0" prefHeight="16.0" prefWidth="110.0" text="Num" textFill="black">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <Label fx:id="textoNombre" prefHeight="16.0" prefWidth="154.0" text="Retrato" textFill="#000307">
+        <font>
+            <Font size="16.0" />
+        </font>
+    </Label>
+    <Button fx:id="btnModificar" layoutX="368.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#cargar" prefHeight="26.0" prefWidth="85.0" style="-fx-border-color: #2A73FF; -fx-border-radius: 20; -fx-background-color: transparent;" stylesheets="@style.css" text="Modificar" />
+    <Button fx:id="btnEliminar" mnemonicParsing="false" onMouseClicked="#eliminar" prefHeight="26.0" prefWidth="85.0" style="-fx-border-color: #CC4E4EFF; -fx-border-radius: 20; -fx-background-color: transparent;" stylesheets="@style.css" text="Eliminar">
+        <HBox.margin>
+            <Insets />
+        </HBox.margin>
+    </Button>
+</HBox>
