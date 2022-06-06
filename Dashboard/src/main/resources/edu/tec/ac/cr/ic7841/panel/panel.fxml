@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="876.0" prefWidth="1357.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.tec.ac.cr.ic7841.panel.ControladorPanel">
+    <effect>
+        <DropShadow color="#1b1eeb" />
+    </effect>
+    <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #ead2d7;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <ImageView fitHeight="113.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+            <VBox.margin>
+                <Insets bottom="10.0" top="50.0" />
+            </VBox.margin>
+            <Image url="@logo.png" />
+        </ImageView>
+        <Button fx:id="btnPanel" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="91.0" prefWidth="256.0" stylesheets="@style.css" text="Inicio" textFill="#e7e5e5">
+            <graphic>
+                <ImageView fitHeight="44.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@icons8_Home_32px.png" />
+                </ImageView>
+            </graphic>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <padding>
+                <Insets left="50.0" />
+            </padding>
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnSalir" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onMouseClicked="#salir" prefHeight="94.0" prefWidth="260.0" stylesheets="@style.css" text="Salir">
+            <graphic>
+                <ImageView fitHeight="39.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                    <Image url="@icons8_Sign_Out_32px.png" />
+                </ImageView>
+            </graphic>
+            <padding>
+                <Insets left="50.0" />
+            </padding>
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+    </VBox>
+    <StackPane layoutX="258.0" prefHeight="819.0" prefWidth="1062.0" style="-fx-background-color: #ffffff;">
+        <Pane prefHeight="874.0" prefWidth="1094.0">
+            <TextField layoutX="854.0" layoutY="27.0" prefHeight="27.0" prefWidth="183.0" promptText="Buscar" style="-fx-background-color: #ead2d7; -fx-border-color: #ead2d7; -fx-border-radius: 5;" />
+            <Label layoutX="57.0" layoutY="25.0" text="Panel Administrativo">
+                <font>
+                    <Font size="24.0" />
+                </font>
+            </Label>
+            <ScrollPane layoutX="14.0" layoutY="123.0" prefHeight="320.0" prefWidth="1038.0" stylesheets="@style.css">
+                <content>
+                    <VBox fx:id="panelProductos" prefHeight="318.0" prefWidth="1036.0" spacing="5.0" style="-fx-background-color: #f2f2f3;">
+                        <padding>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+            <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="1009.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@icons8_Search_52px.png" />
+            </ImageView>
+            <ScrollPane layoutX="14.0" layoutY="507.0" prefHeight="320.0" prefWidth="1038.0" stylesheets="@style.css">
+                <content>
+                    <VBox fx:id="panelCaracteristicas" prefHeight="319.0" prefWidth="1042.0" spacing="5.0" style="-fx-background-color: #f2f2f3;">
+                        <padding>
+                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                        </padding>
+                    </VBox>
+                </content>
+            </ScrollPane>
+            <HBox alignment="CENTER_LEFT" layoutX="14.0" layoutY="70.0" prefHeight="42.0" prefWidth="1038.0" spacing="80.0" style="-fx-background-color: #f2f2f3;">
+                <children>
+                    <Label prefHeight="25.0" prefWidth="47.0" text="Nº" textFill="#5736ff">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="Producto" textFill="#6a4be7">
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="Precio" textFill="#e90000">
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Button fx:id="btnAgregarProducto" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#cargarNuevoProducto" prefHeight="26.0" prefWidth="109.0" style="-fx-border-color: #fad9dc; -fx-border-radius: 35; -fx-background-color: #fad9dc;" stylesheets="@style.css" text="+ Agregar" HBox.hgrow="ALWAYS" />
+                </children>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" layoutX="12.0" layoutY="455.0" prefHeight="42.0" prefWidth="1038.0" spacing="80.0" style="-fx-background-color: #f2f2f3;">
+                <children>
+                    <Label text="Nº" textFill="#6865ab">
+                        <HBox.margin>
+                            <Insets left="50.0" />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Label layoutX="60.0" layoutY="19.0" text="Caracteristica" textFill="#959771">
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="Tipo" textFill="#ff327a">
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Label text="Precio" textFill="#00c2c5">
+                        <HBox.margin>
+                            <Insets />
+                        </HBox.margin>
+                        <font>
+                            <Font name="System Bold" size="20.0" />
+                        </font>
+                    </Label>
+                    <Button fx:id="btnAgregarCaracteristica" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onMouseClicked="#cargarNuevaCaracteristica" prefHeight="26.0" prefWidth="109.0" style="-fx-border-color: #fad9dc; -fx-border-radius: 35; -fx-background-color: #fad9dc;" stylesheets="@style.css" text="+ Agregar" />
+                </children>
+            </HBox>
+        </Pane>
+    </StackPane>
+</AnchorPane>
