@@ -323,6 +323,8 @@ tu asistente virtual de Myries Desing. Si deseas obtener mas información puedes
 - /Agente (Para hablar con un agente de ventas).
             """)
 def agente(update: Update, context: CallbackContext):
+    info = f'El usuario {update.effective_user.username} desea comunicarse con un usuario'
+    test = telegram_bot_sendtext(info)
     update.message.reply_text(
         f"""Pronto uno de nuestros agentes te atendera en breve""")
 
