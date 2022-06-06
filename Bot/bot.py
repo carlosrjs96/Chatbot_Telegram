@@ -9,6 +9,7 @@ from telegram.ext.filters import Filters
 import Classes
 import SQL
 import Util
+import requests
 
 _json = Util.load_Json('Config.json')
 bot_token = _json['bot_token']
@@ -17,21 +18,19 @@ updater = Updater(bot_token,use_context=True)
 #--------------------------------------------------------------------
 # Flujos de productos
 preguntas =  [
-    "¿Cual tipo de lienzo te gustaria hacer?",     # Pregunta 0
-    "¿Cual de los siguentes tamaños te interesa?", # Pregunta 1
+    "¿Cual tipo de lienzo te gustaria hacer? Elija un número",     # Pregunta 0
+    "¿Cual de los siguentes tamaños te interesa? Elija un número", # Pregunta 1
     """- Todos los lienzos incluyen una persona
 - En retratos de 20x20 son maximo 2 personas en total
 ¿Cuantas personas extra desea en el lienzo?""", # Pregunta 2
     """- Todos los lienzos incluyen una mascota
 - En retratos de 20x20 son maximo 2 mascotas en total
 ¿Cuantas mascotas extra desea en el lienzo?""", # Pregunta 3
-    "Todos los retratos van con fondo de color liso. En caso de solicitar un fondo elaborado se cobra como adicional. ✨", # Pregunta 4
-    "¿Desea hacer montaje de 2 fotos?", # Pregunta 5
+    "Todos los retratos van con fondo de color liso. En caso de solicitar un fondo elaborado se cobra como adicional. ✨ Elija un número", # Pregunta 4
+    "¿Desea hacer montaje de 2 fotos? Elija un número", # Pregunta 5
     "¿Cual es tu número telefónico?", # Pregunta 7
     "¿Cual es tu nombre de usuario en instagram?", # Pregunta 8
 ]
-
-import requests
 
 def telegram_bot_sendtext(bot_message):
    data = {
@@ -156,9 +155,10 @@ Gracias por preferir Myrie's Design. Tu pedido fue tomando pronto nos contactare
 def recibe_info_texto(update: Update, context: CallbackContext) -> int:
     if context.user_data["Flujo"].numero_pregunta == 8:
         context.user_data["Flujo"].cliente.user_Instagram = update.message.text
+        update.message.reply_text(f"Agrego el instagram exitosamente")
         context.user_data["Flujo"].numero_pregunta += 1
     else:
-        unknown()
+        unknown(update,context)
     flujo(update,context)
 
 def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
@@ -172,11 +172,11 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
         if validar_opciones_lista(Opciones,opcion_elegida):
             opcion = Opciones[int(opcion_elegida)-1]
             opcion = opcion[1]
-            update.message.reply_text(f"Elegiste la opcion {opcion_elegida}. {opcion}")
+            update.message.reply_text(f"Elegiste la opción {opcion_elegida}. {opcion}")
             context.user_data["Flujo"].producto.nombre = opcion
             context.user_data["Flujo"].numero_pregunta += 1
         else:
-            update.message.reply_text(f"Ingrese una opcion valida")
+            update.message.reply_text(f"Ingrese una opción valida")
 
     # Pregunta 1 => "¿Cual de los siguentes tamaños te interesa?" 
     elif context.user_data["Flujo"].numero_pregunta == 1:
@@ -186,7 +186,8 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
         Opciones = SQL.DBConnection.execute_query(query,state=True)
         if validar_opciones_lista(Opciones,opcion_elegida):
             opcion = Opciones[int(opcion_elegida)-1]# <- AQUI ES DONDE SE VALIDA LA RESPUESTA
-            update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            #update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            update.message.reply_text(f"Elegiste la opción {opcion_elegida}. {opcion[2]}")
             caracteristica = Classes.Caracteristica()
             caracteristica.nombre = opcion[2]
             caracteristica.tipo   = Classes.Tipo_Caracteristica.TAMANO
@@ -194,7 +195,7 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
             context.user_data["Flujo"].producto.caracteristicas.append(caracteristica)
             context.user_data["Flujo"].numero_pregunta += 1
         else:
-            update.message.reply_text(f"Ingrese una opcion valida")
+            update.message.reply_text(f"Ingrese una opción valida")
     
     # Pregunta 2 => "¿Cuantas personas deseas en el retrato?"
     elif context.user_data["Flujo"].numero_pregunta == 2:
@@ -206,7 +207,7 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
         caracteristicas   = context.user_data["Flujo"].producto.caracteristicas
         if validar_opciones_cantidad(cantidad_personas,caracteristicas):
             opcion = Opciones[0]# <- AQUI ES DONDE SE VALIDA LA RESPUESTA
-            update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            update.message.reply_text(f"""Agregaste {cantidad_personas} persona(s) extra exitosamente""")
             for i in range(cantidad_personas):    
                 caracteristica = Classes.Caracteristica()
                 caracteristica.nombre = opcion[2]
@@ -227,7 +228,7 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
         caracteristicas   = context.user_data["Flujo"].producto.caracteristicas
         if validar_opciones_cantidad(cantidad_mascotas,caracteristicas):
             opcion = Opciones[0]# <- AQUI ES DONDE SE VALIDA LA RESPUESTA
-            update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            update.message.reply_text(f"""Agregaste {cantidad_mascotas} mascota(s) extra exitosameente""")
             for i in range(cantidad_mascotas):    
                 caracteristica = Classes.Caracteristica()
                 caracteristica.nombre = opcion[2]
@@ -246,7 +247,8 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
         Opciones = SQL.DBConnection.execute_query(query,state=True)
         if validar_opciones_lista(Opciones,opcion_elegida):
             opcion = Opciones[int(opcion_elegida)-1]# <- AQUI ES DONDE SE VALIDA LA RESPUESTA
-            update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            #update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            update.message.reply_text(f"Elegiste la opción {opcion_elegida}. {opcion[2]}")
             caracteristica = Classes.Caracteristica()
             caracteristica.nombre = opcion[2]
             caracteristica.tipo   = Classes.Tipo_Caracteristica.FONDO
@@ -254,7 +256,7 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
             context.user_data["Flujo"].producto.caracteristicas.append(caracteristica)
             context.user_data["Flujo"].numero_pregunta += 1
         else:
-            update.message.reply_text(f"Ingrese una opcion valida")
+            update.message.reply_text(f"Ingrese una opción valida")
     # Pregunta 5 => "¿Desea hacer montaje de 2 fotos?"
     elif context.user_data["Flujo"].numero_pregunta == 5:
         if opcion_elegida == 1:
@@ -263,7 +265,8 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
             query = SQL.query_Select_All_From_Caracteristica_By_Producto(producto,tipo)
             results = SQL.DBConnection.execute_query(query,state=True)
             opcion = results[0]# <- AQUI ES DONDE SE VALIDA LA RESPUESTA
-            update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            #update.message.reply_text(f"""Elegiste {opcion[2]}""")
+            update.message.reply_text(f"Elegiste la opción {opcion_elegida}. {opcion[2]}")
             caracteristica = Classes.Caracteristica()
             caracteristica.nombre = opcion[2]
             caracteristica.tipo   = Classes.Tipo_Caracteristica.MOTAJE
@@ -271,18 +274,19 @@ def recibe_info_numeros(update: Update, context: CallbackContext) -> int:
             context.user_data["Flujo"].producto.caracteristicas.append(caracteristica)
             context.user_data["Flujo"].numero_pregunta += 1
         elif opcion_elegida > 2 or opcion_elegida <=0:
-            update.message.reply_text(f"Ingrese una opcion valida")
+            update.message.reply_text(f"Ingrese una opción valida")
         else:
             context.user_data["Flujo"].numero_pregunta += 1
     elif context.user_data["Flujo"].numero_pregunta == 7:
         if len(update.message.text) == 8:
             celular = opcion_elegida
             context.user_data["Flujo"].cliente.celular = celular 
+            update.message.reply_text(f"Agrego el número telefónico exitosamente")
             context.user_data["Flujo"].numero_pregunta += 1
         else:
             update.message.reply_text(f"Ingrese una número telefónico valido")
     else:
-        unknown()
+        unknown(update,context)
     flujo(update,context)
 
 # Validaciones
